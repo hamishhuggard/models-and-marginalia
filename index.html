@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transformers and Tokens</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    /* ⇢ very‐light neutral palette + serif type */
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: Georgia, serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    header h1 {
+      margin: 0.5rem 0;
+      font-family: 'Alegreya SC', serif;
+      font-size: 2.5rem;
+    }
+    /* Alternatively: “Models and Marginalia” */
+    /* <!-- Alternatively: Models and Marginalia --> */
+
+    /* Articles */
+    .articles h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .month {
+      padding: 1.5rem 0;
+      border-top: 1px solid #ccc;
+      background: #f9f4ee;
+    }
+    .month:nth-child(even) {
+      background: #fff;
+    }
+    .month h3 {
+      margin: 0 0 0.75rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .posts {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .posts li {
+      margin-bottom: 0.75rem;
+    }
+    .posts a {
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+    .posts a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="banner.png" alt="Banner">
+    <h1>Transformers and Tokens</h1>
+    <!-- Alternatively: <h1>Models and Marginalia</h1> -->
+  </header>
+
+  <main class="articles">
+    <h2>Articles</h2>
+
+    <div class="month">
+      <h3>May 2025</h3>
+      <ul class="posts">
+        <li>
+          <a href="train-with-pytorch.html">Train a Model with PyTorch</a>
+          – A guide to training a Transformer from scratch with PyTorch.
+        </li>
+        <li>
+          <a href="activation-maps.html">Activation Maps</a>
+          – Visualizing what each neuron learns in your model.
+        </li>
+      </ul>
+    </div>
+
+    <div class="month">
+      <h3>April 2025</h3>
+      <ul class="posts">
+        <li>
+          <a href="illustrated-guide-to-transformers.html">Illustrated Guide to Transformers</a>
+          – A fully visual walkthrough of the Transformer architecture.
+        </li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
