@@ -1,12 +1,10 @@
 ---
 layout: post
-title: "Optimizers in Deep Learning"
+title: "Optimizers"
 date: 2024-05-20
 published: true
 description: "A comprehensive guide to optimization algorithms in deep learning, from SGD to Adam and beyond."
 ---
-
-# Optimizers in Deep Learning
 
 Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today, from the foundational [stochastic approximation methods](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) to modern adaptive optimizers.
 
@@ -26,9 +24,12 @@ Optimization algorithms are the engines that drive the training of neural networ
 
 The most basic optimizer, SGD updates parameters in the direction of the negative gradient:
 
-```python
-w = w - learning_rate * gradient
-```
+$$\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)$$
+
+Where:
+- $\theta_t$ is the parameter vector at time step $t$
+- $\eta$ is the learning rate
+- $\nabla_\theta J(\theta_t)$ is the gradient of the loss function with respect to the parameters
 
 While simple, vanilla SGD has several limitations:
 - It can get stuck in local minima
@@ -39,10 +40,12 @@ While simple, vanilla SGD has several limitations:
 
 [Momentum](https://link.springer.com/article/10.1007/BF01086565) helps SGD overcome local minima by adding a velocity term:
 
-```python
-velocity = momentum * velocity - learning_rate * gradient
-w = w + velocity
-```
+$$v_{t+1} = \gamma v_t - \eta \nabla_\theta J(\theta_t)$$
+$$\theta_{t+1} = \theta_t + v_{t+1}$$
+
+Where:
+- $v_t$ is the velocity vector at time step $t$
+- $\gamma$ is the momentum coefficient (typically 0.9)
 
 This helps the optimizer:
 - Build up speed in directions of consistent gradients
@@ -53,10 +56,14 @@ This helps the optimizer:
 
 [RMSprop](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf) adapts the learning rate for each parameter by dividing the gradient by a running average of its magnitude:
 
-```python
-cache = decay_rate * cache + (1 - decay_rate) * gradient**2
-w = w - learning_rate * gradient / (sqrt(cache) + epsilon)
-```
+$$E[g^2]_t = \beta E[g^2]_{t-1} + (1-\beta)g_t^2$$
+$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{E[g^2]_t + \epsilon}} \odot g_t$$
+
+Where:
+- $E[g^2]_t$ is the running average of squared gradients
+- $\beta$ is the decay rate (typically 0.99)
+- $\epsilon$ is a small constant for numerical stability
+- $\odot$ represents element-wise multiplication
 
 Key benefits:
 - Adapts learning rates per parameter
@@ -67,13 +74,17 @@ Key benefits:
 
 [Adam](https://arxiv.org/abs/1412.6980) combines the benefits of momentum and RMSprop:
 
-```python
-m = beta1 * m + (1 - beta1) * gradient
-v = beta2 * v + (1 - beta2) * gradient**2
-m_hat = m / (1 - beta1**t)
-v_hat = v / (1 - beta2**t)
-w = w - learning_rate * m_hat / (sqrt(v_hat) + epsilon)
-```
+$$m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t$$
+$$v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2$$
+$$\hat{m}_t = \frac{m_t}{1-\beta_1^t}$$
+$$\hat{v}_t = \frac{v_t}{1-\beta_2^t}$$
+$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t$$
+
+Where:
+- $m_t$ is the first moment (mean) of the gradients
+- $v_t$ is the second moment (variance) of the gradients
+- $\beta_1$ and $\beta_2$ are decay rates (typically 0.9 and 0.999)
+- $\hat{m}_t$ and $\hat{v}_t$ are bias-corrected moments
 
 Adam's advantages:
 - Combines momentum and adaptive learning rates
@@ -85,9 +96,11 @@ Adam's advantages:
 
 [AdamW](https://arxiv.org/abs/1711.05101) is a variant of Adam that implements weight decay correctly:
 
-```python
-w = w - learning_rate * (m_hat / (sqrt(v_hat) + epsilon) + weight_decay * w)
-```
+$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t - \lambda \theta_t$$
+
+Where:
+- $\lambda$ is the weight decay coefficient
+- The weight decay term is decoupled from the gradient update
 
 Benefits:
 - Better generalization
@@ -120,9 +133,9 @@ When selecting an optimizer, consider:
    - Consider warmup for Adam
 
 2. **Hyperparameters**
-   - Adam: beta1=0.9, beta2=0.999
-   - Momentum: 0.9
-   - RMSprop: decay_rate=0.99
+   - Adam: $\beta_1=0.9$, $\beta_2=0.999$
+   - Momentum: $\gamma=0.9$
+   - RMSprop: $\beta=0.99$
 
 3. **Monitoring**
    - Watch for signs of divergence
