@@ -1,28 +1,30 @@
 ---
 layout: base
 ---
-<div class="home-content">
-  {% if page.title %}
-    <h1>{{ page.title }}</h1>
-  {% endif %}
+<div class="posts">
+  <a href="https://transformer-circuits.pub/">The style of this blog is inspired by</a>
+</div>
 
-  {{ content }}
+<main class="articles">
+  <h2>Articles</h2>
 
-  {% if site.posts.size > 0 %}
-    <div class="posts-list">
-      {% assign posts_by_month = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
-      {% for month in posts_by_month %}
-        <section class="month">
-          <h3>{{ month.name }}</h3>
-          <ul class="posts">
-            {% for post in month.items %}
-              <li>
-                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </section>
-      {% endfor %}
-    </div>
+  {% assign published_posts = site.posts | where: "published", true %}
+  {% if published_posts.size > 0 %}
+    {% assign posts_by_month = published_posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
+    {% for month in posts_by_month %}
+      <div class="month">
+        <h3>{{ month.name }}</h3>
+        <ul class="posts">
+          {% for post in month.items %}
+            <li>
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              {% if post.description %}
+                – {{ post.description }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
   {% endif %}
-</div> 
+</main> 

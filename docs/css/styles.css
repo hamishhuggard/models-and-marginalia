@@ -1,3 +1,4 @@
+/* ⇢ very‐light neutral palette + serif type */
 body {
   margin: 0;
   padding: 1rem;
@@ -58,17 +59,17 @@ header h1 {
   padding: 0;
 }
 
-li {
+.posts li {
   margin-bottom: 0.75rem;
 }
 
-a {
+.posts a {
   font-weight: bold;
   color: #000;
   text-decoration: none;
 }
 
-a:hover {
+.posts a:hover {
   text-decoration: underline;
 }
 
