@@ -63,13 +63,14 @@ header h1 {
   margin-bottom: 0.75rem;
 }
 
-.posts a {
+/* Link styles */
+a {
   font-weight: bold;
   color: #000;
   text-decoration: none;
 }
 
-.posts a:hover {
+a:hover {
   text-decoration: underline;
 }
 
@@ -133,4 +134,26 @@ header h1 {
 .post-content pre code {
   background: none;
   padding: 0;
+}
+
+/* Post content specific styles */
+.post-content a {
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+}
+
+.post-content a:hover {
+  text-decoration: underline;
+}
+
+/* Keep the posts list specific styles */
+.posts a {
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+}
+
+.posts a:hover {
+  text-decoration: underline;
 } 
