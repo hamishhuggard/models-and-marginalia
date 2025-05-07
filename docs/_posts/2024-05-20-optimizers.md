@@ -10,6 +10,18 @@ description: "A comprehensive guide to optimization algorithms in deep learning,
 
 Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today.
 
+## Table of Contents
+
+- [Stochastic Gradient Descent (SGD)](#stochastic-gradient-descent-sgd)
+- [Momentum](#momentum)
+- [RMSprop](#rmsprop)
+- [Adam (Adaptive Moment Estimation)](#adam-adaptive-moment-estimation)
+- [AdamW](#adamw)
+- [Choosing the Right Optimizer](#choosing-the-right-optimizer)
+- [Best Practices](#best-practices)
+- [Code Example](#code-example)
+- [Conclusion](#conclusion)
+
 ## Stochastic Gradient Descent (SGD)
 
 The most basic optimizer, SGD updates parameters in the direction of the negative gradient:
