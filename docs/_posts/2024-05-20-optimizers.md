@@ -8,7 +8,7 @@ description: "A comprehensive guide to optimization algorithms in deep learning,
 
 # Optimizers in Deep Learning
 
-Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today.
+Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today, from the foundational [stochastic approximation methods](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) to modern adaptive optimizers.
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ While simple, vanilla SGD has several limitations:
 
 ## Momentum
 
-Momentum helps SGD overcome local minima by adding a velocity term:
+[Momentum](https://link.springer.com/article/10.1007/BF01086565) helps SGD overcome local minima by adding a velocity term:
 
 ```python
 velocity = momentum * velocity - learning_rate * gradient
@@ -51,7 +51,7 @@ This helps the optimizer:
 
 ## RMSprop
 
-RMSprop adapts the learning rate for each parameter by dividing the gradient by a running average of its magnitude:
+[RMSprop](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf) adapts the learning rate for each parameter by dividing the gradient by a running average of its magnitude:
 
 ```python
 cache = decay_rate * cache + (1 - decay_rate) * gradient**2
@@ -65,7 +65,7 @@ Key benefits:
 
 ## Adam (Adaptive Moment Estimation)
 
-Adam combines the benefits of momentum and RMSprop:
+[Adam](https://arxiv.org/abs/1412.6980) combines the benefits of momentum and RMSprop:
 
 ```python
 m = beta1 * m + (1 - beta1) * gradient
@@ -83,7 +83,7 @@ Adam's advantages:
 
 ## AdamW
 
-AdamW is a variant of Adam that implements weight decay correctly:
+[AdamW](https://arxiv.org/abs/1711.05101) is a variant of Adam that implements weight decay correctly:
 
 ```python
 w = w - learning_rate * (m_hat / (sqrt(v_hat) + epsilon) + weight_decay * w)
@@ -160,6 +160,20 @@ for epoch in range(num_epochs):
 
 ## Conclusion
 
-While Adam and its variants are popular choices, there's no one-size-fits-all optimizer. The best choice depends on your specific problem, dataset, and model architecture. Experiment with different optimizers and their hyperparameters to find what works best for your use case.
+While Adam and its variants are popular choices, there's no one-size-fits-all optimizer. The best choice depends on your specific problem, dataset, and model architecture. For a more detailed comparison of optimization algorithms, see [Ruder's comprehensive overview](https://arxiv.org/abs/1609.04747).
 
-Remember that the optimizer is just one part of the training process. Proper initialization, learning rate scheduling, and regularization are equally important for successful model training. 
+Remember that the optimizer is just one part of the training process. Proper initialization, learning rate scheduling, and regularization are equally important for successful model training.
+
+## References
+
+1. [Robbins, H., & Monro, S. (1951). A Stochastic Approximation Method.](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) - The original paper introducing stochastic approximation methods.
+
+2. [Polyak, B. T. (1964). Some methods of speeding up the convergence of iteration methods.](https://link.springer.com/article/10.1007/BF01086565) - Introduces the concept of momentum in optimization.
+
+3. [Hinton, G. (2012). Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude.](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf) - The original RMSprop algorithm.
+
+4. [Kingma, D. P., & Ba, J. (2014). Adam: A Method for Stochastic Optimization.](https://arxiv.org/abs/1412.6980) - The paper introducing the Adam optimizer.
+
+5. [Loshchilov, I., & Hutter, F. (2017). Decoupled Weight Decay Regularization.](https://arxiv.org/abs/1711.05101) - Introduces AdamW and explains the importance of proper weight decay implementation.
+
+6. [Ruder, S. (2016). An overview of gradient descent optimization algorithms.](https://arxiv.org/abs/1609.04747) - A comprehensive overview of optimization algorithms in deep learning. 
