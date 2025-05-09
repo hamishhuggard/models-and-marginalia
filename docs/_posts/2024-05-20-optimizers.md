@@ -11,6 +11,7 @@ Optimization algorithms are the engines that drive the training of neural networ
 ## Table of Contents
 
 - [Stochastic Gradient Descent (SGD)](#stochastic-gradient-descent-sgd)
+- [Adagrad](#adagrad)
 - [Momentum](#momentum)
 - [RMSprop](#rmsprop)
 - [Adam (Adaptive Moment Estimation)](#adam-adaptive-moment-estimation)
@@ -35,6 +36,29 @@ While simple, vanilla SGD has several limitations:
 - It can get stuck in local minima
 - It's sensitive to the learning rate
 - It doesn't account for parameter-specific learning rates
+
+## Adagrad
+
+[Adagrad](https://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf) (Adaptive Gradient Algorithm) was one of the first optimizers to introduce adaptive learning rates for each parameter. It adapts the learning rate based on the historical gradients:
+
+$$G_{t} = G_{t-1} + g_t^2$$
+$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{G_t + \epsilon}} \odot g_t$$
+
+Where:
+- $G_t$ is the sum of squared gradients up to time step $t$
+- $\eta$ is the initial learning rate
+- $\epsilon$ is a small constant for numerical stability
+- $\odot$ represents element-wise multiplication
+
+Key characteristics:
+- Automatically adapts learning rates for each parameter
+- Performs larger updates for infrequent parameters
+- Performs smaller updates for frequent parameters
+
+Limitations:
+- Learning rate can become too small over time
+- Accumulation of squared gradients can lead to premature convergence
+- Memory requirements grow with the number of parameters
 
 ## Momentum
 

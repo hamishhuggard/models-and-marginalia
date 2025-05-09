@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Train a Model with PyTorch"
+title: "PyTorch"
 date: 2024-05-01
 published: true
-description: "A guide to training a Transformer from scratch with PyTorch."
+description: "Basics of the PyTorch library."
 ---
 
-# Train a Model with PyTorch
+# PyTorch
 
 This is a guide to training a Transformer model from scratch using PyTorch. We'll cover:
 
