@@ -3,7 +3,7 @@ layout: post
 title: "Optimizers"
 date: 2024-05-20
 published: true
-description: "A comprehensive guide to optimization algorithms in deep learning, from SGD to Adam and beyond."
+description: "How to roll down a hill."
 ---
 
 Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today, from the foundational [stochastic approximation methods](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) to modern adaptive optimizers.
