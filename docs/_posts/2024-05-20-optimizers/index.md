@@ -3,10 +3,19 @@ layout: post
 title: "Optimizers"
 date: 2024-05-20
 published: true
-description: "How to roll down a hill."
+description: "Algorithms for finding the minimum of a loss landscape."
 ---
 
+A modern LLM has a search space of trillions of real-valued parameters, and each model call requires trillions of floating point operations. Somehow in this vast search space, we need to find the best combination of parameters
+
+The search space of deep learning is vast, and evaluating loss is expensive. As of 2025, the cutting edge of LLMs have trillions of parameters, which means we need to find the point in a 
+
+Optimizers are algoirthms for efficiently finding a minimum of a loss landscape 
+
 Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today, from the foundational [stochastic approximation methods](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) to modern adaptive optimizers.
+
+![Loss Landscape Visualization](/images/optimizers/loss-landscape.png)
+*The complex loss landscape that optimizers must navigate. Different optimizers take different paths to find the minimum.*
 
 ## Table of Contents
 
@@ -37,6 +46,9 @@ While simple, vanilla SGD has several limitations:
 - It's sensitive to the learning rate
 - It doesn't account for parameter-specific learning rates
 
+![SGD Convergence Path](/optimizers-images/sgd-convergence.png)
+*SGD follows the steepest descent path, which can lead to zigzagging in narrow valleys and getting stuck in local minima.*
+
 ## Adagrad
 
 [Adagrad](https://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf) (Adaptive Gradient Algorithm) was one of the first optimizers to introduce adaptive learning rates for each parameter. It adapts the learning rate based on the historical gradients:
@@ -60,6 +72,9 @@ Limitations:
 - Accumulation of squared gradients can lead to premature convergence
 - Memory requirements grow with the number of parameters
 
+![Adagrad Learning Rate Adaptation](/optimizers-images/adagrad-adaptation.png)
+*Adagrad automatically reduces learning rates for frequently updated parameters, leading to more stable convergence.*
+
 ## Momentum
 
 [Momentum](https://link.springer.com/article/10.1007/BF01086565) helps SGD overcome local minima by adding a velocity term:
@@ -75,6 +90,9 @@ This helps the optimizer:
 - Build up speed in directions of consistent gradients
 - Overcome small local minima
 - Reduce oscillations in narrow valleys
+
+![Momentum vs SGD](/optimizers-images/momentum-vs-sgd.png)
+*Momentum helps the optimizer build up speed in consistent directions and overcome small local minima that would trap vanilla SGD.*
 
 ## RMSprop
 
@@ -93,6 +111,9 @@ Key benefits:
 - Adapts learning rates per parameter
 - Works well with non-stationary objectives
 - Handles different scales of gradients
+
+![RMSprop Adaptive Learning](/optimizers-images/rmsprop-adaptive.png)
+*RMSprop adapts learning rates based on recent gradient magnitudes, preventing the learning rate from becoming too small over time.*
 
 ## Adam (Adaptive Moment Estimation)
 
@@ -116,6 +137,9 @@ Adam's advantages:
 - Requires little tuning
 - Generally converges faster than other optimizers
 
+![Adam Convergence Comparison](/optimizers-images/adam-convergence.png)
+*Adam typically converges faster than other optimizers by combining momentum with adaptive learning rates.*
+
 ## AdamW
 
 [AdamW](https://arxiv.org/abs/1711.05101) is a variant of Adam that implements weight decay correctly:
@@ -130,6 +154,9 @@ Benefits:
 - Better generalization
 - More effective weight decay
 - Often outperforms Adam in practice
+
+![AdamW vs Adam](/optimizers-images/adamw-vs-adam.png)
+*AdamW often achieves better generalization by implementing weight decay correctly, separate from the gradient update.*
 
 ## Choosing the Right Optimizer
 
@@ -149,6 +176,9 @@ When selecting an optimizer, consider:
    - CNNs: SGD with momentum or Adam
    - RNNs: Adam or RMSprop
 
+![Optimizer Performance Comparison](/optimizers-images/optimizer-comparison.png)
+*Different optimizers perform better on different types of problems and datasets.*
+
 ## Best Practices
 
 1. **Learning Rate**
@@ -165,6 +195,9 @@ When selecting an optimizer, consider:
    - Watch for signs of divergence
    - Monitor gradient norms
    - Check parameter updates
+
+![Learning Rate Scheduling](/optimizers-images/learning-rate-scheduling.png)
+*Proper learning rate scheduling can significantly improve convergence and final performance.*
 
 ## Code Example
 
@@ -200,6 +233,9 @@ for epoch in range(num_epochs):
 While Adam and its variants are popular choices, there's no one-size-fits-all optimizer. The best choice depends on your specific problem, dataset, and model architecture. For a more detailed comparison of optimization algorithms, see [Ruder's comprehensive overview](https://arxiv.org/abs/1609.04747).
 
 Remember that the optimizer is just one part of the training process. Proper initialization, learning rate scheduling, and regularization are equally important for successful model training.
+
+![Final Convergence Paths](/optimizers-images/final-convergence-paths.png)
+*Different optimizers take different paths to convergence, each with their own advantages and trade-offs.*
 
 ## References
 
