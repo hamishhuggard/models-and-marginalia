@@ -6,6 +6,59 @@ published: true
 description: "Algorithms for finding the minimum of a loss landscape."
 ---
 
+Once we have defined the architecture of a model, and thus specified a space of parameter values, we next need an effective way of exploring the model space for a good model.
+
+There is a family of algorithms called optimizers that are used to traverse the parameter landscape and converge towards a minimum. Here's the family tree for the optimizers:
+
+![Optimizer Family Tree]({{ site.baseurl }}/assets/images/optimizers/index.png)
+
+## Stochastic Gradient Descent (SGD)
+
+The most elementary optimizer is stochastic gradient descent (SGD). The idea of SGD is simple: iteratively take steps downhill in the direction of the steepest slope, until you arrive at the bottom of the valley. 
+
+![Gradient Descent]({{ site.baseurl }}/assets/images/optimizers/gradient_descent.png)
+
+This is expressed mathematically as:
+
+$$
+\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)
+$$
+
+Where $\theta_t$ is the parameter vector at time step $t$, $\eta$ is the learning rate, and $\nabla_\theta J(\theta_t)$ is the gradient of the loss function with respect to the parameters.
+
+## Momentum
+
+One issue with SGD is that if there is a "gutter" in the loss landscape, the optimizer will bounce back and forth between the two sides of the gutter, which is note very efficient.
+
+![Gutter]({{ site.baseurl }}/assets/images/optimizers/gutter.png)
+
+Momentum is a simple fix to this problem. Again, the idea is simple: give the optimizer momentum analagous to physics. Imagine a ball rolling down a gutter: it will bounce between the sides of the gutter, but its momentum will dampen the oscillations and it will eventually settle down to a more direct path towards the minimum.
+
+![Momentum]({{ site.baseurl }}/assets/images/optimizers/momentum.png)
+
+This is expressed mathematically as:
+
+$$
+\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t) + \gamma \theta_{t-1}
+$$
+
+Where $\gamma$ is the momentum coefficient.
+
+## RMSprop
+
+RMSprop is a variant of SGD that adapts the learning rate for each parameter based on the historical gradients. The idea is that we should take larger steps for parameters that are infrequent, and smaller steps for parameters that are frequent.
+
+
+
+
+
+![Adagrad]({{ site.baseurl }}/assets/images/optimizers/adagrad.png)
+![Adam]({{ site.baseurl }}/assets/images/optimizers/adam.png)
+![AdamW]({{ site.baseurl }}/assets/images/optimizers/adamw.png)
+![Momentum]({{ site.baseurl }}/assets/images/optimizers/momentum.png)
+![RMSprop]({{ site.baseurl }}/assets/images/optimizers/rmsprop.png)
+![SGD]({{ site.baseurl }}/assets/images/optimizers/sgd.png)
+
 A modern LLM has a search space of trillions of real-valued parameters, and each model call requires trillions of floating point operations. Somehow in this vast search space, we need to find the best combination of parameters
 
 The search space of deep learning is vast, and evaluating loss is expensive. As of 2025, the cutting edge of LLMs have trillions of parameters, which means we need to find the point in a 
@@ -14,7 +67,7 @@ Optimizers are algoirthms for efficiently finding a minimum of a loss landscape
 
 Optimization algorithms are the engines that drive the training of neural networks. They determine how the model's parameters are updated to minimize the loss function. In this post, we'll explore the most important optimizers used in deep learning today, from the foundational [stochastic approximation methods](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-3/A-Stochastic-Approximation-Method/10.1214/aoms/1177729586.full) to modern adaptive optimizers.
 
-![Loss Landscape Visualization](/images/optimizers/loss-landscape.png)
+![Loss Landscape Visualization](assets/images/optimizers/index.png)
 *The complex loss landscape that optimizers must navigate. Different optimizers take different paths to find the minimum.*
 
 ## Table of Contents
@@ -46,7 +99,7 @@ While simple, vanilla SGD has several limitations:
 - It's sensitive to the learning rate
 - It doesn't account for parameter-specific learning rates
 
-![SGD Convergence Path](/optimizers-images/sgd-convergence.png)
+![SGD Convergence Path](assets/images/optimizers/gradient_descent.png)
 *SGD follows the steepest descent path, which can lead to zigzagging in narrow valleys and getting stuck in local minima.*
 
 ## Adagrad
@@ -72,7 +125,7 @@ Limitations:
 - Accumulation of squared gradients can lead to premature convergence
 - Memory requirements grow with the number of parameters
 
-![Adagrad Learning Rate Adaptation](/optimizers-images/adagrad-adaptation.png)
+![Adagrad Learning Rate Adaptation](assets/images/optimizers/adagrad.png)
 *Adagrad automatically reduces learning rates for frequently updated parameters, leading to more stable convergence.*
 
 ## Momentum
@@ -91,7 +144,7 @@ This helps the optimizer:
 - Overcome small local minima
 - Reduce oscillations in narrow valleys
 
-![Momentum vs SGD](/optimizers-images/momentum-vs-sgd.png)
+![Momentum vs SGD](assets/images/optimizers/momentum.png)
 *Momentum helps the optimizer build up speed in consistent directions and overcome small local minima that would trap vanilla SGD.*
 
 ## RMSprop
@@ -112,7 +165,7 @@ Key benefits:
 - Works well with non-stationary objectives
 - Handles different scales of gradients
 
-![RMSprop Adaptive Learning](/optimizers-images/rmsprop-adaptive.png)
+![RMSprop Adaptive Learning](assets/images/optimizers/rmsprop.png)
 *RMSprop adapts learning rates based on recent gradient magnitudes, preventing the learning rate from becoming too small over time.*
 
 ## Adam (Adaptive Moment Estimation)
@@ -137,7 +190,7 @@ Adam's advantages:
 - Requires little tuning
 - Generally converges faster than other optimizers
 
-![Adam Convergence Comparison](/optimizers-images/adam-convergence.png)
+![Adam Convergence Comparison](assets/images/optimizers/adam.png)
 *Adam typically converges faster than other optimizers by combining momentum with adaptive learning rates.*
 
 ## AdamW
@@ -155,7 +208,6 @@ Benefits:
 - More effective weight decay
 - Often outperforms Adam in practice
 
-![AdamW vs Adam](/optimizers-images/adamw-vs-adam.png)
 *AdamW often achieves better generalization by implementing weight decay correctly, separate from the gradient update.*
 
 ## Choosing the Right Optimizer
@@ -176,7 +228,6 @@ When selecting an optimizer, consider:
    - CNNs: SGD with momentum or Adam
    - RNNs: Adam or RMSprop
 
-![Optimizer Performance Comparison](/optimizers-images/optimizer-comparison.png)
 *Different optimizers perform better on different types of problems and datasets.*
 
 ## Best Practices
@@ -196,7 +247,6 @@ When selecting an optimizer, consider:
    - Monitor gradient norms
    - Check parameter updates
 
-![Learning Rate Scheduling](/optimizers-images/learning-rate-scheduling.png)
 *Proper learning rate scheduling can significantly improve convergence and final performance.*
 
 ## Code Example
@@ -234,7 +284,6 @@ While Adam and its variants are popular choices, there's no one-size-fits-all op
 
 Remember that the optimizer is just one part of the training process. Proper initialization, learning rate scheduling, and regularization are equally important for successful model training.
 
-![Final Convergence Paths](/optimizers-images/final-convergence-paths.png)
 *Different optimizers take different paths to convergence, each with their own advantages and trade-offs.*
 
 ## References
